@@ -1,0 +1,11 @@
+<body>
+  <h2>Stock Data Results</h2>
+
+  <% if @stock_data %>
+    <!-- Display stock data here -->
+    <pre><%= JSON.pretty_generate(@stock_data) %></pre>
+  <% else %>
+    <!-- Display error message here -->
+    <p><%= @error_message %></p>
+  <% end %>
+</body>
