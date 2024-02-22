@@ -1,9 +1,13 @@
 require "sinatra"
 require "sinatra/reloader"
-
+require "http"
 get("/") do
-  "
-  <h1>Welcome to your Sinatra App!</h1>
-  <p>Define some routes in app.rb</p>
-  "
+  erb(:homepage)
+end
+
+
+get("/search") do
+  
+  api_url = "https://api.polygon.io/v2/reference/tickers/search?q=#{ticker_symbol}&apiKey=#{ENV["STOCK_API_KEY"]}"
+  response = HTTP.get (api_url)
 end
