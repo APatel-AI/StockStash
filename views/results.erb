@@ -1,11 +1,56 @@
+
 <body>
-  <h2>Stock Data Results</h2>
+      <a href="/">Home</a>
+
+  <h2> <%= @stock_data["ticker"] %> Stock Data Results</h2>
+
 
   <% if @stock_data %>
-    <!-- Display stock data here -->
-    <pre><%= JSON.pretty_generate(@stock_data) %></pre>
+    <canvas id="stockChart" width="300" height="100"></canvas>
+    <script>
+      var stockData = <%= JSON.generate (@stock_data["results"]) %>;
+
+      // Extracting timestamps and closing prices for the chart
+      var timestamps = stockData.map(function(data) {
+        return new Date(data.t).toLocaleDateString();
+      });
+
+
+
+      var closingPrices = stockData.map(function(data) {
+        return data.c;
+      });
+
+      // Creating a line chart
+      var ctx = document.getElementById('stockChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: timestamps,
+          datasets: [{
+            label: 'Closing Prices',
+            data: closingPrices,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 2,
+            backgroundColor: '#212F3C',
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'category',
+              labels: timestamps
+            },
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    </script>
   <% else %>
-    <!-- Display error message here -->
     <p><%= @error_message %></p>
   <% end %>
+
+
 </body>

@@ -15,8 +15,7 @@ get("/get_stock_data") do
 
 
   api_url = "https://api.polygon.io/v2/aggs/ticker/#{ticker_symbol}/range/1/day/#{start_date}/#{end_date}?adjusted=true&sort=asc&limit=120&apiKey=#{ENV["STOCK_API_KEY"]}"
-  response = HTTP.get (api_url)
-
+  response = HTTP.get(api_url)
 
   #200 ok response handler
 
